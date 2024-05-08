@@ -74,7 +74,7 @@ function Header() {
       className={`${style["header"]} px-4`}
     >
       <Flex align="center">
-        <Image src="public/logo.svg"></Image>
+        <Image src="/logo.svg"></Image>
         <Title
           className={title_h3_logo}
           level={3}
