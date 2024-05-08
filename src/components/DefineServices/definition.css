@@ -1,0 +1,42 @@
+@media screen and (min-width: 575.98px) {
+  .definition .def_para {
+    width: 95% !important;
+    font-weight: 500 !important;
+    font-size: 14px;
+  }
+
+  .definition_main_content {
+    padding: 0 0 !important;
+  }
+}
+
+@media screen and (min-width: 767.98px) {
+  .definition .def_para {
+    width: 80% !important;
+    font-weight: 500 !important;
+    font-size: 20px;
+  }
+}
+
+@media screen and (min-width: 1199.98px) {
+  .definition_main_content {
+    padding: 0 36px !important;
+  }
+  .definition .def_para {
+    width: 50% !important;
+    font-weight: 400 !important;
+    font-size: 25px;
+  }
+}
+
+@media screen and (max-width: 575.97px) {
+  .definition .def_para {
+    width: 95% !important;
+    font-weight: 500 !important;
+    font-size: 14px;
+  }
+
+  .definition_main_content {
+    padding: 0 0 !important;
+  }
+}

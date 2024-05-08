@@ -1,0 +1,18 @@
+.description{
+    background-image: url("public/img/serviceBg.png");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    position: relative;
+}
+
+.layer_bg{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-color: #a8d8ff73;
+
+}
