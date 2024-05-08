@@ -1,5 +1,5 @@
 .description{
-    background-image: url("public/img/serviceBg.png");
+    background-image: url("/img/serviceBg.png");
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

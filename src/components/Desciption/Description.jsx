@@ -13,13 +13,13 @@ function Description() {
         </Title>
         <div className="row">
           <div className="col-12 col-xl-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3">
-            <CardItem imgSrc="public/img/p1.jpg"></CardItem>
+            <CardItem imgSrc="/img/p1.jpg"></CardItem>
           </div>
           <div className="col-12 col-xl-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3">
-            <CardItem imgSrc="public/img/p2.jpg"></CardItem>
+            <CardItem imgSrc="/img/p2.jpg"></CardItem>
           </div>
           <div className="col-12 col-xl-4 col-md-6 col-sm-12 d-flex justify-content-center mt-3">
-            <CardItem imgSrc="public/img/p3.jpg"></CardItem>
+            <CardItem imgSrc="/img/p3.jpg"></CardItem>
           </div>
         </div>
       </div>

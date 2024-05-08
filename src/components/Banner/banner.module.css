@@ -1,6 +1,6 @@
 .banner{
     padding-top: 80px;
-    background-image: url('public/img/bgImg.jpg');
+    background-image: url('/img/bgImg.jpg');
     background-size: cover;
     background-position: center;
     width: 100%;

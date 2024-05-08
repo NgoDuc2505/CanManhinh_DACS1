@@ -20,16 +20,16 @@ function Introduce() {
         </div>
         <div className={`row ${icons_intro}`}>
             <div className="col-6 col-md-3 col-sm-6  d-flex justify-content-center">
-                <ArchiveItem imgSrc={'public/img/location.png'} detail={`${['Khu vực', 'TP. Hồ Chí Minh']}`}></ArchiveItem>
+                <ArchiveItem imgSrc={'/img/location.png'} detail={`${['Khu vực', 'TP. Hồ Chí Minh']}`}></ArchiveItem>
             </div>
             <div className="col-6 col-md-3 col-sm-6 d-flex justify-content-center">
-                <ArchiveItem imgSrc={'public/img/speed.png'} detail={`${['Nhanh chóng', 'Tiện lợi']}`}></ArchiveItem>
+                <ArchiveItem imgSrc={'/img/speed.png'} detail={`${['Nhanh chóng', 'Tiện lợi']}`}></ArchiveItem>
             </div>
             <div className="col-6 col-md-3 col-sm-6 d-flex justify-content-center">
-                <ArchiveItem imgSrc={'public/img/trend.png'} detail={`${['Dịch vụ', 'Chất lượng cao']}`}></ArchiveItem>
+                <ArchiveItem imgSrc={'/img/trend.png'} detail={`${['Dịch vụ', 'Chất lượng cao']}`}></ArchiveItem>
             </div>
             <div className="col-6 col-md-3 col-sm-6 d-flex justify-content-center">
-                <ArchiveItem imgSrc={'public/img/reward.png'} detail={`${['Bảo hành', 'Trọn đời màn hình']}`}></ArchiveItem>
+                <ArchiveItem imgSrc={'/img/reward.png'} detail={`${['Bảo hành', 'Trọn đời màn hình']}`}></ArchiveItem>
             </div>
         </div>
       </div>

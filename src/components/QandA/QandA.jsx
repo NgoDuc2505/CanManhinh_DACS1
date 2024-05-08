@@ -12,7 +12,7 @@ function QandA() {
           <div className="col-12 col-md-5 col-sm-12 h-100">
             <div className={img_qna_wrapper}>
               <Image
-                src="public/img/team.jpg"
+                src="/img/team.jpg"
                 style={{ height: "100%" }}
               ></Image>
             </div>
@@ -27,7 +27,7 @@ function QandA() {
                 </Paragraph>
               </div>
               <div className={img_qna_wrapper}>
-                <Image src="public/img/work.jpg"></Image>
+                <Image src="/img/work.jpg"></Image>
               </div>
             </Flex>
           </div>

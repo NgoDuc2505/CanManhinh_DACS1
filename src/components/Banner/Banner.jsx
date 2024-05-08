@@ -17,7 +17,7 @@ function Banner() {
         <div className="row">
           <div className={`${style["left_content_banner"]} col-12 col-md-6 col-sm-12`}>
             <div className={style["img_wrapper"]}>
-              <Image src="public/img/demo.png"></Image>
+              <Image src="/img/demo.png"></Image>
             </div>
           </div>
           <div className={`${style["right_content_banner"]} col-12 col-md-6 col-sm-12`}>
@@ -27,7 +27,7 @@ function Banner() {
                 <div className={style["img_wrapper_xWrite"]}>
                   <img
                     className={style["img_xWriteDisplay"]}
-                    src="public/img/xWrite.png"
+                    src="/img/xWrite.png"
                     alt="...."
                   />
                 </div>

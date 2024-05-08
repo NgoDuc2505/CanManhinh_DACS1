@@ -1,5 +1,5 @@
 .introduce {
-  background-image: url("public/img/productBg.png");
+  background-image: url("/img/productBg.png");
   background-size: cover;
   padding: 80px 0;
   height: 80vh;

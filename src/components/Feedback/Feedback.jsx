@@ -16,22 +16,22 @@ function Feedback() {
         </Title>
         <div className="row">
           <div className={`col-12 col-xl-4 col-md-6 col-sm-12 ${img_feedback_item}`}>
-            <Image src="public/img/fb1.jpg"></Image>
+            <Image src="/img/fb1.jpg"></Image>
           </div>
           <div className={`col-12 col-xl-4 col-md-6 col-sm-12 ${img_feedback_item}`}>
-            <Image src="public/img/bgImg.jpg"></Image>
+            <Image src="/img/bgImg.jpg"></Image>
           </div>
           <div className={`col-12 col-xl-4 col-md-6 col-sm-12 ${img_feedback_item}`}>
-            <Image src="public/img/fb2.png"></Image>
+            <Image src="/img/fb2.png"></Image>
           </div>
           <div className={`col-12 col-xl-4 col-md-6 col-sm-12 ${img_feedback_item}`}>
-            <Image src="public/img/fb3.jpg"></Image>
+            <Image src="/img/fb3.jpg"></Image>
           </div>
           <div className={`col-12 col-xl-4 col-md-6 col-sm-12 ${img_feedback_item}`}>
-            <Image src="public/img/fb4.png"></Image>
+            <Image src="/img/fb4.png"></Image>
           </div>
           <div className={`col-12 col-xl-4 col-md-6 col-sm-12 ${img_feedback_item}`}>
-            <Image src="public/img/fb5.png"></Image>
+            <Image src="/img/fb5.png"></Image>
           </div>
         </div>
       </div>
