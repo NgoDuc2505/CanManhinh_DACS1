@@ -11,9 +11,11 @@
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.7",
+    "animate.css": "^4.1.1",
     "antd": "^5.17.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.23.0",
     "tailwindcss": "^3.4.3"
   },
   "devDependencies": {
