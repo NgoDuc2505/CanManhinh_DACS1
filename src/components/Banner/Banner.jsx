@@ -1,9 +1,14 @@
 // import React from "react";
+import { useNavigate } from "react-router-dom";
 import style from "./banner.module.css";
 import { Typography, Flex, Image, Button } from "antd";
 
 function Banner() {
   const { Title } = Typography;
+  const navigate = useNavigate();
+  const handleBooking = ()=>{
+    navigate("/booking-now");
+  }
   return (
     <div className={style["banner"]}>
       <div className={style["layer"]}></div>
@@ -40,7 +45,7 @@ function Banner() {
           </div>
         </div>
         <div className={style["btn_center"]}>
-        <Button type="primary" className={style["booking_service_btn"]}>Đặt lịch cân</Button>
+        <Button type="primary" className={style["booking_service_btn"]} onClick={()=>{handleBooking()}}>Đặt lịch cân</Button>
         </div>
       </div>
     </div>
