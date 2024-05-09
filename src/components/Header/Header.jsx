@@ -1,6 +1,8 @@
 import { Flex, Image, Typography, Menu, Button } from "antd";
 import {
   AppstoreOutlined,
+  EditOutlined,
+  LoginOutlined,
   MailOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -31,45 +33,44 @@ function Header() {
       label: "Hỗ trợ",
       key: "support",
       icon: <SettingOutlined />,
-      children: [
-        {
-          type: "group",
-          label: "Item 1",
-          children: [
-            {
-              label: "Option 1",
-              key: "setting:1",
-            },
-            {
-              label: "Option 2",
-              key: "setting:2",
-            },
-          ],
-        },
-        {
-          type: "group",
-          label: "Item 2",
-          children: [
-            {
-              label: "Option 3",
-              key: "setting:3",
-            },
-            {
-              label: "Option 4",
-              key: "setting:4",
-            },
-          ],
-        },
-      ],
     },
     {
       label: "Khác",
       key: "other",
       icon: <MailOutlined />,
+      children: [
+        {
+          label: "Đăng ký",
+          key: "regis",
+          icon: <EditOutlined />,
+        },
+        {
+          label: "Đăng nhập",
+          key: "login",
+          icon: <LoginOutlined />,
+        },
+        {
+          label: "Admin",
+          key: "admin",
+          icon: <UserOutlined />,
+        },
+      ],
     },
   ];
-  const onClick = (e) => {
+  const handleClickMenu1 = (e) => {
     console.log("click ", e);
+    const { key } = e;
+    switch (key) {
+      case "admin":
+        break;
+      case "login":
+        break;
+      case "regis":
+        break;
+    }
+  };
+  const handleClickMenu2 = (e) => {
+    console.log("click 2", e);
   };
 
   const toggleCollapsed = () => {
@@ -102,14 +103,14 @@ function Header() {
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
         <Menu
-          onClick={onClick}
+          onClick={handleClickMenu1}
           mode="horizontal"
           items={items}
           theme="dark"
           className={style["menu_header"]}
         />
         <Menu
-          onClick={onClick}
+          onClick={handleClickMenu2}
           defaultSelectedKeys={["1"]}
           defaultOpenKeys={["sub1"]}
           mode="inline"
