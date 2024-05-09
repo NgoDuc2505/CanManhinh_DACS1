@@ -93,10 +93,21 @@
     .left_content_banner{
         width: 50%;
     }
-    .btn_center{
-        margin-top: 30px;
-    }
+
 }
+
+@media screen and (min-width: 991.98px) {
+    .booking_service_btn{
+        margin-top: unset;
+    }
+    
+}
+
+@media screen and (min-width: 1199.98px) {
+    .banner{
+        height: 100vh;
+    }
+  }
 
 @media screen and (max-width: 575.97px) {
     .left_content_banner,
