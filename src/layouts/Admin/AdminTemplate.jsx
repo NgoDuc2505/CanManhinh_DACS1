@@ -41,7 +41,6 @@ const AdminTemplate = () => {
     switch (key) {
       case '1':
         navigate('/')
-        navigate(0);
         break;
     
       default:

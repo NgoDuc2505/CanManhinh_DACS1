@@ -11,9 +11,14 @@ import {
 } from "@ant-design/icons";
 
 import style from "./header.module.css";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { LOGIN, REGISTER, HOME, ADMIN } from "../../constants/constant";
 
 function Header() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const refBtn = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
   const [hiddenState, setHidden] = useState(true);
   const { Title } = Typography;
@@ -21,7 +26,7 @@ function Header() {
   const items = [
     {
       label: "Giới thiệu",
-      key: "intro",
+      key: HOME,
       icon: <MailOutlined />,
     },
     {
@@ -41,36 +46,36 @@ function Header() {
       children: [
         {
           label: "Đăng ký",
-          key: "regis",
+          key: REGISTER,
           icon: <EditOutlined />,
         },
         {
           label: "Đăng nhập",
-          key: "login",
+          key: LOGIN,
           icon: <LoginOutlined />,
         },
         {
           label: "Admin",
-          key: "admin",
+          key: ADMIN,
           icon: <UserOutlined />,
         },
       ],
     },
   ];
-  const handleClickMenu1 = (e) => {
-    console.log("click ", e);
-    const { key } = e;
-    switch (key) {
-      case "admin":
-        break;
-      case "login":
-        break;
-      case "regis":
-        break;
+
+  useEffect(() => {
+    if(!hiddenState){
+      refBtn.current.click();
     }
+  }, [location.pathname]);
+  
+  const handleClickMenu1 = (e) => {
+    const { key } = e;
+    navigate(`${key}`);
   };
   const handleClickMenu2 = (e) => {
-    console.log("click 2", e);
+    const { key } = e;
+    navigate(`${key}`);
   };
 
   const toggleCollapsed = () => {
@@ -99,6 +104,7 @@ function Header() {
           type="default"
           onClick={toggleCollapsed}
           className={btn_collapse}
+          ref={refBtn}
         >
           {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
         </Button>
