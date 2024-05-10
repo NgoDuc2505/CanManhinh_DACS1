@@ -1,5 +1,4 @@
-
-import HomeTemplate from "./layouts/HomeTemplate"
+import { RootRouterComponent } from "./routing/route.config"
 
 
 
@@ -7,7 +6,8 @@ function App() {
 
   return (
     <div>
-      <HomeTemplate></HomeTemplate>
+      {/* <HomeTemplate></HomeTemplate> */}
+      <RootRouterComponent></RootRouterComponent>
     </div>
   )
 }

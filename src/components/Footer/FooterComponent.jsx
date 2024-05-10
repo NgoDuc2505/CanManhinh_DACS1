@@ -2,6 +2,7 @@
 import { Space, Typography, Input } from "antd";
 import style from "./footer.module.css";
 import { HomeOutlined, PhoneOutlined } from "@ant-design/icons";
+import 'animate.css';
 
 function FooterComponent() {
   const { Title } = Typography;
@@ -19,7 +20,7 @@ function FooterComponent() {
           size="small"
         >
           <Title>PRO DISPLAY</Title>
-          <Title level={5}>Đăng nhập để có thể nhận các thông tin và ưu đãi mới nhất</Title>
+          <Title level={5} className="animate__animated animate__pulse animate__slower animate__infinite">Đăng nhập để có thể nhận các thông tin và ưu đãi mới nhất</Title>
           <Search
             placeholder="Nhập email của bạn..."
             allowClear

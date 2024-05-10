@@ -19,6 +19,7 @@ function HomeTemplate() {
       <Footer
         style={{
           textAlign: "center",
+          fontWeight: 800
         }}
       >
         Ngo Minh Duc 23CE014 Design ©{new Date().getFullYear()} Created by Ant |

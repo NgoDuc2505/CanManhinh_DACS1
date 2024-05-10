@@ -1,11 +1,19 @@
-import style from "./login.module.css";
-import { Button, Checkbox, Flex, Form, Input, Typography } from "antd";
+// import React from 'react';
+import style from "../Login/login.module.css";
+import {
+  Button,
+  Checkbox,
+  DatePicker,
+  Flex,
+  Form,
+  Input,
+  Typography,
+} from "antd";
 import "animate.css";
 import { useNavigate } from "react-router-dom";
 
-const Login = () => {
-  const { login_form, main_form_login, form_login_antd, btn_login_group } =
-    style;
+function Register() {
+  const { main_form_register, register_form, form_register_antd } = style;
   const { Title } = Typography;
   const navigate = useNavigate();
   const onFinish = (values) => {
@@ -14,24 +22,27 @@ const Login = () => {
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
-  const goToRegister = () => {
-    navigate("/register");
+  const goToLogin = () => {
+    navigate("/login");
   };
   return (
-    <div className={login_form}>
-      <div className={main_form_login}>
+    <div className={register_form}>
+      <div className={main_form_register}>
         <div className="container animate__animated animate__backInLeft">
-          <Title level={1} className="mb-5 main_title">
-            Đăng nhập
+          <Title level={1} className="main_title">
+            Đăng ký
           </Title>
           <Form
-            className={form_login_antd}
             name="basic"
+            className={form_register_antd}
             labelCol={{
               span: 8,
             }}
-            wrLoginerCol={{
+            wrapperCol={{
               span: 16,
+            }}
+            style={{
+              maxWidth: 600,
             }}
             initialValues={{
               remember: true,
@@ -50,7 +61,7 @@ const Login = () => {
                 },
               ]}
             >
-              <Input style={{ width: "60%" }} />
+              <Input />
             </Form.Item>
 
             <Form.Item
@@ -63,7 +74,41 @@ const Login = () => {
                 },
               ]}
             >
-              <Input.Password style={{ width: "60%" }} />
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+              label="Số điện thoại"
+              name="phone"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Địa chỉ"
+              name="address"
+              rules={[
+                {
+                  required: true,
+                  message: "Please input your username!",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+
+            <Form.Item
+              label="Ngày sinh"
+              name="DatePicker"
+              rules={[{ required: true, message: "Please input!" }]}
+            >
+              <DatePicker />
             </Form.Item>
 
             <Form.Item
@@ -74,7 +119,7 @@ const Login = () => {
                 span: 16,
               }}
             >
-              <Checkbox>Ghi nhớ tôi</Checkbox>
+              <Checkbox>Remember me</Checkbox>
             </Form.Item>
             <Form.Item
               wrapperCol={{
@@ -82,14 +127,11 @@ const Login = () => {
                 span: 16,
               }}
             >
-              <Button type="link" htmlType="reset" onClick={goToRegister}>
-                Hãy đăng ký ngay...
+              <Button type="link" htmlType="submit" onClick={goToLogin}>
+                Đăng nhập ngay...
               </Button>
             </Form.Item>
-            <Flex
-              justify="end"
-              className={`gap-3 animate__animated animate__backInRight ${btn_login_group}`}
-            >
+            <Flex justify="end" className="gap-3">
               <Form.Item
                 wrapperCol={{
                   offset: 8,
@@ -116,5 +158,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
-export default Login;
+}
+
+export default Register;
