@@ -20,7 +20,7 @@ const DragHandle = () => {
   );
 };
 
-const Row = (props) => {
+const RowData = (props) => {
     const {
       attributes,
       listeners,
@@ -57,4 +57,4 @@ const Row = (props) => {
     );
   };
 
-export { DragHandle, Row };
+export { DragHandle, RowData };

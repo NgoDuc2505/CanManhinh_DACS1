@@ -1,15 +1,7 @@
-import { RootRouterComponent } from "./routing/route.config"
-
-
+import { RootRouterComponent } from "./routing/route.config";
 
 function App() {
-
-  return (
-    <div>
-      {/* <HomeTemplate></HomeTemplate> */}
-      <RootRouterComponent></RootRouterComponent>
-    </div>
-  )
+  return <RootRouterComponent></RootRouterComponent>;
 }
 
-export default App
+export default App;

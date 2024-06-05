@@ -1,0 +1,24 @@
+.space_item_table .ant-space-item{
+    width: 100%;
+}
+
+@media screen and (max-width:567.98px) {
+    .profile{
+        height: unset!important;
+    }
+
+    .space_item_table{
+        height: unset!important;
+    } 
+
+    .space_form_profile{
+        height: 510px!important;
+        padding: 0 15px;
+    }
+}
+
+@media screen and (min-width: 991.98px) {
+    .profile{
+        height: unset!important;
+    }
+}

@@ -8,7 +8,7 @@ import {
 import { Breadcrumb, Layout, Menu, theme } from "antd";
 import TableBooking from "../../components/AdminComponents/TableOfBooking/TableBooking";
 import style from "./adminTemplate.module.css";
-import { useNavigate  } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const AdminTemplate = () => {
   const { admin_sider } = style;
   const navigate = useNavigate();
@@ -16,7 +16,12 @@ const AdminTemplate = () => {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   const { Header, Content, Sider } = Layout;
-  const sideBarTitleMapping = ["User Manage", "Booking Manage", "Income"];
+  const sideBarTitleMapping = [
+    "User Manage",
+    "Booking Manage",
+    "Income",
+    "Feature",
+  ];
   const menuItem = ["PRO DISPLAY", "Home", "Dash Board", "Log Out"].map(
     (item, index) => {
       return {
@@ -26,27 +31,34 @@ const AdminTemplate = () => {
       };
     }
   );
-  const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-    (icon, index) => {
-      const key = String(index + 1);
-      return {
-        key: `sub${key}`,
-        icon: React.createElement(icon),
-        label: sideBarTitleMapping[index],
-      };
-    }
-  );
-  const menuHandleClick = (e)=>{
-    const {key} = e;
+  const items2 = [
+    UserOutlined,
+    LaptopOutlined,
+    NotificationOutlined,
+    LaptopOutlined,
+  ].map((icon, index) => {
+    return {
+      key: `${sideBarTitleMapping[index]}`,
+      icon: React.createElement(icon),
+      label: sideBarTitleMapping[index],
+    };
+  });
+  const menuHandleClick = (e) => {
+    const { key } = e;
     switch (key) {
-      case '1':
-        navigate('/')
+      case "1":
+        navigate("/");
         break;
-    
+
       default:
         break;
     }
-  }
+  };
+
+  const sibarHandleClick = (e) => {
+    const { key } = e;
+    console.log(key);
+  };
   return (
     <Layout>
       <Header
@@ -85,6 +97,7 @@ const AdminTemplate = () => {
               borderRight: 0,
             }}
             items={items2}
+            onClick={sibarHandleClick}
           />
         </Sider>
         <Layout
@@ -110,7 +123,7 @@ const AdminTemplate = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <TableBooking></TableBooking>
+            <TableBooking data={[]}></TableBooking>
           </Content>
         </Layout>
       </Layout>
