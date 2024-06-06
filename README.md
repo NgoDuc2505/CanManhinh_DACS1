@@ -1,8 +1,42 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Ecomerce Services - Adjust color displaydisplay
+Back_end: https://github.com/NgoDuc2505/CanManhinh_BE
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Authors
+
+- [NgoDuc2505](https://github.com/NgoDuc2505)
+
+
+
+## Tech Stack
+
+**Client:** React, Redux, Ant Design, React-router, Tanstack query, Axios...
+
+**Server:** Node, Prisma, Nest js, MySQL, Docker.
+
+
+## Installation
+
+Install my-project with npm
+
+```bash
+  npm clone my-project
+  cd my-project
+```
+```bash
+  npm i
+```
+## Deployment
+
+To deploy this project run
+
+```bash
+  npm run deploy
+```
+
+
+## Support
+
+Contact me.
+
