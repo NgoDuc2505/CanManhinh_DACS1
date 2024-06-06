@@ -2,6 +2,7 @@ import { Outlet, createBrowserRouter, useLocation } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 import { Spin } from "antd";
 import { QueryClient, QueryClientProvider } from "react-query";
+import PageNoteExits from "../components/PageNotExits/PageNoteExits.jsx";
 
 const LazyHome = lazy(() => import("../layouts/HomeTemplate"));
 const LazyAdmin = lazy(() => import("../layouts/Admin/AdminTemplate"));
@@ -45,7 +46,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootRouterComponent></RootRouterComponent>,
-    errorElement: <Spin spinning={true} fullscreen style={{ opacity: ".7" }} />,
+    errorElement: <PageNoteExits></PageNoteExits>,
     children: [
       {
         path: "/",
