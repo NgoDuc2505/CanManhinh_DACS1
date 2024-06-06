@@ -16,7 +16,11 @@ const LazyRegister = lazy(() =>
   import("../components/AdminComponents/Register/Register.jsx")
 );
 
-const LazyProfile = lazy(()=> import("../components/Profile/Profile.jsx"))
+const LazyProfile = lazy(() => import("../components/Profile/Profile.jsx"));
+const LazyDescription = lazy(() =>
+  import("../components/DefineServices/DefineContent.jsx")
+);
+const LazyBookingNow = lazy(()=>import("../components/BookingNow/BookingNow.jsx"))
 const queryClient = new QueryClient();
 const RootRouterComponent = () => {
   const scrollToTop = () => {
@@ -41,6 +45,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <RootRouterComponent></RootRouterComponent>,
+    errorElement: <Spin spinning={true} fullscreen style={{ opacity: ".7" }} />,
     children: [
       {
         path: "/",
@@ -67,8 +72,16 @@ const router = createBrowserRouter([
           },
           {
             path: "/profile/:usrName",
-            element: <LazyProfile></LazyProfile>
-          }
+            element: <LazyProfile></LazyProfile>,
+          },
+          {
+            path: "/services",
+            element: <div style={{marginTop:"100px"}}><LazyDescription></LazyDescription></div>,
+          },
+          {
+            path: "support",
+            element: <div style={{marginTop:"100px"}}><LazyBookingNow></LazyBookingNow></div>,
+          },
         ],
       },
       {
