@@ -4,7 +4,7 @@ import "animate.css";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const { login_form, main_form_login, form_login_antd, btn_login_group } =
+  const { login_form, main_form_login, form_login_antd, btn_login_group, login } =
     style;
   const { Title } = Typography;
   const navigate = useNavigate();
@@ -20,7 +20,7 @@ const Login = () => {
   return (
     <div className={login_form}>
       <div className={main_form_login}>
-        <div className="container animate__animated animate__backInLeft">
+        <div className={`${login} container animate__animated animate__backInLeft`}>
           <Title level={1} className="mb-5 main_title">
             Đăng nhập
           </Title>

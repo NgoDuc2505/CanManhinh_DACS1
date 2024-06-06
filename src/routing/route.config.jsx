@@ -1,6 +1,8 @@
 import { Outlet, createBrowserRouter, useLocation } from "react-router-dom";
 import { Suspense, lazy, useEffect } from "react";
 import { Spin } from "antd";
+import { QueryClient, QueryClientProvider } from "react-query";
+import PageNoteExits from "../components/PageNotExits/PageNoteExits.jsx";
 
 const LazyHome = lazy(() => import("../layouts/HomeTemplate"));
 const LazyAdmin = lazy(() => import("../layouts/Admin/AdminTemplate"));
@@ -14,36 +16,13 @@ const LazyLogin = lazy(() =>
 const LazyRegister = lazy(() =>
   import("../components/AdminComponents/Register/Register.jsx")
 );
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element: <LazyHome></LazyHome>,
-//     errorElement: <Spin spinning={true} fullscreen style={{opacity: '.7'}} />,
-//     children:[
-//       {
-//         path: "/",
-//         element: <LazyClient></LazyClient>
-//       },
-//       {
-//         path: "/booking-now",
-//         element: <LazyBooking></LazyBooking>
-//       },
-//       {
-//         path: "/login",
-//         element: <LazyLogin></LazyLogin>
-//       },
-//       {
-//         path: "/register",
-//         element: <LazyRegister></LazyRegister>
-//       }
-//     ]
-//   },
-//   {
-//     path: "/adminCMH",
-//     errorElement: <Spin spinning={true} fullscreen style={{opacity: '.7'}} />,
-//     element: <LazyAdmin></LazyAdmin>
-//   }
-// ]);
+
+const LazyProfile = lazy(() => import("../components/Profile/Profile.jsx"));
+const LazyDescription = lazy(() =>
+  import("../components/DefineServices/DefineContent.jsx")
+);
+const LazyBookingNow = lazy(()=>import("../components/BookingNow/BookingNow.jsx"))
+const queryClient = new QueryClient();
 const RootRouterComponent = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -55,15 +34,19 @@ const RootRouterComponent = () => {
   }, [pathname]);
 
   return (
-    <Suspense>
-      <Outlet></Outlet>
-    </Suspense>
+    <QueryClientProvider client={queryClient}>
+      <Suspense>
+        <Outlet></Outlet>
+      </Suspense>
+    </QueryClientProvider>
   );
 };
+
 const router = createBrowserRouter([
   {
     path: "/",
     element: <RootRouterComponent></RootRouterComponent>,
+    errorElement: <PageNoteExits></PageNoteExits>,
     children: [
       {
         path: "/",
@@ -87,6 +70,18 @@ const router = createBrowserRouter([
           {
             path: "/register",
             element: <LazyRegister></LazyRegister>,
+          },
+          {
+            path: "/profile/:usrName",
+            element: <LazyProfile></LazyProfile>,
+          },
+          {
+            path: "/services",
+            element: <div style={{marginTop:"100px"}}><LazyDescription></LazyDescription></div>,
+          },
+          {
+            path: "support",
+            element: <div style={{marginTop:"100px"}}><LazyBookingNow></LazyBookingNow></div>,
           },
         ],
       },

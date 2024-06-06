@@ -12,7 +12,7 @@ import {
 
 import style from "./header.module.css";
 import { useEffect, useRef, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { LOGIN, REGISTER, HOME, ADMIN } from "../../constants/constant";
 
 function Header() {
@@ -64,11 +64,11 @@ function Header() {
   ];
 
   useEffect(() => {
-    if(!hiddenState){
+    if (!hiddenState) {
       refBtn.current.click();
     }
   }, [location.pathname]);
-  
+
   const handleClickMenu1 = (e) => {
     const { key } = e;
     navigate(`${key}`);
@@ -126,7 +126,9 @@ function Header() {
           className={hiddenState ? menu2_hidden : menu2_display}
         />
         <div className={style["user_logo"]}>
-          <UserOutlined />
+          <NavLink to={"/profile/34"}>
+            <UserOutlined />
+          </NavLink>
         </div>
       </Flex>
     </div>

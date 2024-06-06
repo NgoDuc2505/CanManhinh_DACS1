@@ -1,5 +1,6 @@
 // import React from 'react';
 import style from "../Login/login.module.css";
+import "./register.css"
 import {
   Button,
   Checkbox,
@@ -28,7 +29,7 @@ function Register() {
   return (
     <div className={register_form}>
       <div className={main_form_register}>
-        <div className="container animate__animated animate__backInLeft">
+        <div className="register container animate__animated animate__backInLeft">
           <Title level={1} className="main_title">
             Đăng ký
           </Title>
