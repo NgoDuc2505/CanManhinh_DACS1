@@ -3,10 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 const profileSlice = createSlice({
   name: "profileSlice",
   initialState: {
-    user: {},
+    user: null,
   },
   reducers: {
-    setCurrentUser: (state, action) => {},
+    setCurrentUser: (state, action) => {
+      state.user = action.payload
+    },
   },
 });
 export const { setCurrentUser } = profileSlice.actions;

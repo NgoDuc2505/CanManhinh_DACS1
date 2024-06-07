@@ -13,16 +13,78 @@ import {
 import style from "./header.module.css";
 import { useEffect, useRef, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { LOGIN, REGISTER, HOME, ADMIN } from "../../constants/constant";
+import {
+  LOGIN,
+  REGISTER,
+  HOME,
+  ADMIN,
+  TOKEN_LOGIN,
+  USER_PROFILE
+} from "../../constants/constant";
+import { getValue } from "../../services/local_storage";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../redux/Slices/profileSlice";
+
 
 function Header() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const location = useLocation();
   const refBtn = useRef(null);
   const [collapsed, setCollapsed] = useState(false);
   const [hiddenState, setHidden] = useState(true);
   const { Title } = Typography;
   const { title_h3_logo, btn_collapse, menu2_display, menu2_hidden } = style;
+  const subMenu = [
+    {
+      label: "Đăng ký",
+      key: REGISTER,
+      icon: <EditOutlined />,
+    },
+    {
+      label: "Đăng nhập",
+      key: LOGIN,
+      icon: <LoginOutlined />,
+    },
+    {
+      label: "Admin",
+      key: ADMIN,
+      icon: <UserOutlined />,
+    },
+  ];
+  const [subMenuState, setSubMenu] = useState(subMenu);
+  const data = getValue(TOKEN_LOGIN);
+  const profile = getValue(USER_PROFILE);
+
+  useEffect(() => {
+    if (data && profile) {
+      dispatch(setCurrentUser(profile))
+      if(profile?.roleID == 1){
+        setSubMenu([
+          {
+            label: "Đăng xuất",
+            key: "logOut",
+            icon: <EditOutlined />,
+          },
+          {
+            label: "Admin",
+            key: ADMIN,
+            icon: <UserOutlined />,
+          },
+        ]);
+      }else{
+        setSubMenu([
+          {
+            label: "Đăng xuất",
+            key: "logOut",
+            icon: <EditOutlined />,
+          },
+        ]);
+      }
+    } else {
+      setSubMenu(subMenu);
+    }
+  }, [data]);
   const items = [
     {
       label: "Giới thiệu",
@@ -43,23 +105,7 @@ function Header() {
       label: "Khác",
       key: "other",
       icon: <MailOutlined />,
-      children: [
-        {
-          label: "Đăng ký",
-          key: REGISTER,
-          icon: <EditOutlined />,
-        },
-        {
-          label: "Đăng nhập",
-          key: LOGIN,
-          icon: <LoginOutlined />,
-        },
-        {
-          label: "Admin",
-          key: ADMIN,
-          icon: <UserOutlined />,
-        },
-      ],
+      children: subMenuState,
     },
   ];
 

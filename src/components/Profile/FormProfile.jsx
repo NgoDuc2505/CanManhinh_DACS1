@@ -6,8 +6,42 @@ import {
 } from "@ant-design/icons";
 import { Button, Col, DatePicker, Input, Row, Switch, Form } from "antd";
 import { useState } from "react";
-import { mapperRegex, regexObject, validateMessages} from "./formTableHandler.js"
+import dayjs from "dayjs";
+import {
+  mapperRegex,
+  regexObject,
+  validateMessages,
+} from "./formTableHandler.js";
+import { useSelector } from "react-redux";
+
 function FormProfile() {
+  const selector = useSelector((state) => state.profileSlice.user);
+  if (!selector) {
+    return <div>error</div>;
+  }
+  const dateFormat = "YYYY/MM/DD";
+  const dobInit = new Date(selector?.dob);
+  const dateFormater = {
+    year: dobInit.getFullYear(),
+    month:
+      dobInit.getMonth() + 1 < 10
+        ? `0${dobInit.getMonth() + 1}`
+        : dobInit.getMonth() + 1,
+    date: dobInit.getDate(),
+  };
+  const initProfileData = {
+    address: selector?.address,
+    dayCreated: "",
+    dob: dayjs(
+      `${dateFormater?.year}/${dateFormater?.month}/${dateFormater?.date}`,
+      dateFormat
+    ),
+    password: "P**p**8**",
+    phone: selector?.phone,
+    roleID: selector?.roleID,
+    userName: selector?.userName,
+  };
+
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(true);
   const switchChange = (e) => {
@@ -16,9 +50,10 @@ function FormProfile() {
   const onChange = (date, dateString) => {
     console.log(date, dateString);
   };
- 
+
   return (
     <Form
+      initialValues={initProfileData}
       form={form}
       validateMessages={validateMessages}
       name="trigger"
@@ -29,20 +64,22 @@ function FormProfile() {
         return (
           <Row style={{ gap: "10px", justifyContent: "center" }}>
             <Col span={24} sm={10}>
-              <Input
-                size="large"
-                placeholder="User Name"
-                prefix={<UserOutlined />}
-                disabled={true}
-              />
+              <Form.Item name="userName" className="mb-2">
+                <Input
+                  size="large"
+                  placeholder="User Name"
+                  prefix={<UserOutlined />}
+                  disabled={true}
+                />
+              </Form.Item>
               <Form.Item
                 help={
                   <p className={disabled ? "d-none" : ""}>
-                    {formInstance.getFieldError("Password")}
+                    {formInstance.getFieldError("password")}
                   </p>
                 }
                 hasFeedback
-                name="Password"
+                name="password"
                 messageVariables={{
                   regexMsg: mapperRegex.password,
                   VnName: "Mật khẩu",
@@ -68,11 +105,11 @@ function FormProfile() {
               <Form.Item
                 help={
                   <p className={disabled ? "d-none" : ""}>
-                    {formInstance.getFieldError("Dob")}
+                    {formInstance.getFieldError("dob")}
                   </p>
                 }
                 hasFeedback
-                name="Dob"
+                name="dob"
                 messageVariables={{
                   regexMsg: mapperRegex.birthday,
                   VnName: "Ngày sinh",
@@ -88,6 +125,7 @@ function FormProfile() {
                 <DatePicker
                   disabled={disabled}
                   onChange={onChange}
+                  format={dateFormat}
                 />
               </Form.Item>
             </Col>
@@ -95,11 +133,11 @@ function FormProfile() {
               <Form.Item
                 help={
                   <p className={disabled ? "d-none" : ""}>
-                    {formInstance.getFieldError("Phone")}
+                    {formInstance.getFieldError("phone")}
                   </p>
                 }
                 hasFeedback
-                name="Phone"
+                name="phone"
                 messageVariables={{
                   regexMsg: mapperRegex.phone,
                   VnName: "Số điện thoại",
@@ -123,11 +161,11 @@ function FormProfile() {
               <Form.Item
                 help={
                   <p className={disabled ? "d-none" : ""}>
-                    {formInstance.getFieldError("Adress")}
+                    {formInstance.getFieldError("address")}
                   </p>
                 }
                 hasFeedback
-                name="Adress"
+                name="address"
                 messageVariables={{
                   VnName: "Địa chỉ",
                 }}
@@ -149,13 +187,13 @@ function FormProfile() {
               <div className="row my-2">
                 <div className="col-6">
                   <Button disabled={disabled} type="primary">
-                    Update
+                    Cập nhật
                   </Button>
                 </div>
                 <div className="col-6 d-flex justify-content-center align-items-center">
                   <Switch
-                    checkedChildren="update"
-                    unCheckedChildren="disabled"
+                    checkedChildren="Chỉnh sửa"
+                    unCheckedChildren="Khóa"
                     defaultChecked={false}
                     onChange={switchChange}
                   />

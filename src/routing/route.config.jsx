@@ -21,8 +21,11 @@ const LazyProfile = lazy(() => import("../components/Profile/Profile.jsx"));
 const LazyDescription = lazy(() =>
   import("../components/DefineServices/DefineContent.jsx")
 );
-const LazyBookingNow = lazy(()=>import("../components/BookingNow/BookingNow.jsx"))
-const queryClient = new QueryClient();
+const LazyBookingNow = lazy(()=>import("../components/BookingNow/BookingNow.jsx"));
+const LazyLogout = lazy(()=>import("../components/Logout/Logout.jsx"))
+const queryClient = new QueryClient({
+  
+});
 const RootRouterComponent = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -83,6 +86,10 @@ const router = createBrowserRouter([
             path: "support",
             element: <div style={{marginTop:"100px"}}><LazyBookingNow></LazyBookingNow></div>,
           },
+          {
+            path: "logOut",
+            element: <LazyLogout></LazyLogout>
+          }
         ],
       },
       {
