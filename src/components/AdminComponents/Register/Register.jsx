@@ -1,9 +1,8 @@
 // import React from 'react';
 import style from "../Login/login.module.css";
-import "./register.css"
+import "./register.css";
 import {
   Button,
-  Checkbox,
   DatePicker,
   Flex,
   Form,
@@ -14,7 +13,9 @@ import "animate.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getValue } from "../../../services/local_storage";
-import { TOKEN_LOGIN } from "../../../constants/constant";
+import { TOKEN_LOGIN, ALERT } from "../../../constants/constant";
+import { mapperRegex, regexObject, validateMessages } from "../../Profile/formTableHandler";
+import swal from "sweetalert";
 
 function Register() {
   const { main_form_register, register_form, form_register_antd } = style;
@@ -25,14 +26,15 @@ function Register() {
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
+    swal(ALERT.failed,"Hãy điền đầy đủ thông tin !","error");
   };
   const goToLogin = () => {
     navigate("/login");
   };
   useEffect(() => {
     const data = getValue(TOKEN_LOGIN);
-    if(data){
-      navigate("/")
+    if (data) {
+      navigate("/");
     }
   }, []);
   return (
@@ -43,6 +45,7 @@ function Register() {
             Đăng ký
           </Title>
           <Form
+            validateMessages={validateMessages}
             name="basic"
             className={form_register_antd}
             labelCol={{
@@ -67,9 +70,11 @@ function Register() {
               rules={[
                 {
                   required: true,
-                  message: "Please input your username!",
                 },
               ]}
+              messageVariables={{
+                VnName: "Tên đăng nhập"
+              }}
             >
               <Input />
             </Form.Item>
@@ -80,9 +85,15 @@ function Register() {
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  max: 15,
+                  min: 8,
+                  pattern: regexObject.regexPass,
                 },
               ]}
+              messageVariables={{
+                VnName: "Mật khẩu",
+                regexMsg: mapperRegex.password,
+              }}
             >
               <Input.Password />
             </Form.Item>
@@ -93,43 +104,96 @@ function Register() {
               rules={[
                 {
                   required: true,
-                  message: "Please input your username!",
+                  pattern: regexObject.phone
                 },
               ]}
+              messageVariables={{
+                VnName: "Số điện thoại",
+                regexMsg: mapperRegex.phone,
+              }}
             >
               <Input />
             </Form.Item>
-
+            
             <Form.Item
-              label="Địa chỉ"
-              name="address"
+              label="Số nhà"
+              name="locateNumber"
               rules={[
                 {
                   required: true,
-                  message: "Please input your username!",
                 },
               ]}
+              messageVariables={{
+                VnName: "Số nhà"
+              }}
             >
               <Input />
             </Form.Item>
-
+            <Form.Item
+              label="Đường"
+              name="stress"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+              messageVariables={{
+                VnName: "Đường"
+              }}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Phường/ Xã"
+              name="subDistric"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+              messageVariables={{
+                VnName: "Phường/ Xã"
+              }}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Quận/Huyện"
+              name="distric"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+              messageVariables={{
+                VnName: "Quận/Huyện"
+              }}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              label="Thành phố"
+              name="city"
+              rules={[
+                {
+                  required: true,
+                },
+              ]}
+              messageVariables={{
+                VnName: "Thành phố"
+              }}
+            >
+              <Input />
+            </Form.Item>
             <Form.Item
               label="Ngày sinh"
               name="DatePicker"
-              rules={[{ required: true, message: "Please input!" }]}
-            >
-              <DatePicker />
-            </Form.Item>
-
-            <Form.Item
-              name="remember"
-              valuePropName="checked"
-              wrapperCol={{
-                offset: 8,
-                span: 16,
+              rules={[{ required: true}]}
+              messageVariables={{
+                VnName: "Ngày sinh"
               }}
             >
-              <Checkbox>Remember me</Checkbox>
+              <DatePicker />
             </Form.Item>
             <Form.Item
               wrapperCol={{
