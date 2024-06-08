@@ -4,9 +4,15 @@ import "animate.css";
 import { useNavigate } from "react-router-dom";
 import { regexObject } from "../../Profile/formTableHandler";
 import { onFinish, onFinishFailed } from "./Login.handler";
+import { useEffect } from "react";
+import { getValue } from "../../../services/local_storage";
+import { TOKEN_LOGIN } from "../../../constants/constant";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../../redux/Slices/profileSlice";
 
 const Login = () => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
   const {
     login_form,
     main_form_login,
@@ -16,11 +22,23 @@ const Login = () => {
   } = style;
   const { Title } = Typography;
   const navigate = useNavigate();
-
+  const onSuccessLogin = async (values) => {
+    const rs = await onFinish(values);
+    if (rs.status) {
+      dispatch(setCurrentUser(rs.data));
+      navigate("/");
+    }
+  };
 
   const goToRegister = () => {
     navigate("/register");
   };
+  useEffect(() => {
+    const data = getValue(TOKEN_LOGIN);
+    if(data){
+      navigate("/")
+    }
+  }, []);
   return (
     <div className={login_form}>
       <div className={main_form_login}>
@@ -49,7 +67,7 @@ const Login = () => {
             initialValues={{
               remember: true,
             }}
-            onFinish={onFinish}
+            onFinish={onSuccessLogin}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
@@ -116,7 +134,7 @@ const Login = () => {
                       }}
                     >
                       <Button type="primary" htmlType="submit">
-                        Đăng ký
+                        Đăng nhập
                       </Button>
                     </Form.Item>
                     <Form.Item

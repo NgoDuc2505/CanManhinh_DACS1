@@ -1,4 +1,4 @@
-const setLocal = (data,key) => {
+const setLocal = (data, key) => {
   const jsonData = JSON.stringify(data);
   localStorage.setItem(key, jsonData);
 };
@@ -8,4 +8,8 @@ const getValue = (key) => {
   return data;
 };
 
-export { getValue, setLocal };
+const delLocal = (key) => {
+  localStorage.removeItem(key);
+};
+
+export { getValue, setLocal, delLocal };

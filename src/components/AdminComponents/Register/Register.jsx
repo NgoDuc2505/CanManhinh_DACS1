@@ -12,6 +12,9 @@ import {
 } from "antd";
 import "animate.css";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { getValue } from "../../../services/local_storage";
+import { TOKEN_LOGIN } from "../../../constants/constant";
 
 function Register() {
   const { main_form_register, register_form, form_register_antd } = style;
@@ -26,6 +29,12 @@ function Register() {
   const goToLogin = () => {
     navigate("/login");
   };
+  useEffect(() => {
+    const data = getValue(TOKEN_LOGIN);
+    if(data){
+      navigate("/")
+    }
+  }, []);
   return (
     <div className={register_form}>
       <div className={main_form_register}>

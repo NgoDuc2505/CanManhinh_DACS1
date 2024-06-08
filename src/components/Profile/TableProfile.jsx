@@ -145,7 +145,7 @@ const TableProfile = () => {
   });
   const columns = [
     {
-      title: 'Name',
+      title: 'Tên',
       dataIndex: 'name',
       key: 'name',
       width: '30%',
