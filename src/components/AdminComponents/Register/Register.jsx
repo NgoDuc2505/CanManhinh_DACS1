@@ -1,32 +1,57 @@
 // import React from 'react';
 import style from "../Login/login.module.css";
 import "./register.css";
-import {
-  Button,
-  DatePicker,
-  Flex,
-  Form,
-  Input,
-  Typography,
-} from "antd";
+import { Button, DatePicker, Flex, Form, Input, Typography } from "antd";
 import "animate.css";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { getValue } from "../../../services/local_storage";
-import { TOKEN_LOGIN, ALERT } from "../../../constants/constant";
-import { mapperRegex, regexObject, validateMessages } from "../../Profile/formTableHandler";
+import { TOKEN_LOGIN, ALERT, API_RES_MSG } from "../../../constants/constant";
+import {
+  mapperRegex,
+  regexObject,
+  validateMessages,
+} from "../../Profile/formTableHandler";
 import swal from "sweetalert";
+import {
+  formatAddress,
+  formatDatePicker,
+  createAccount,
+} from "./registerHandler";
 
 function Register() {
   const { main_form_register, register_form, form_register_antd } = style;
   const { Title } = Typography;
   const navigate = useNavigate();
-  const onFinish = (values) => {
-    console.log("Success:", values);
+
+  const onFinish = async (values) => {
+    try {
+      const dateData = formatDatePicker(values.dob);
+      const adressData = formatAddress(values);
+      const accountData = {
+        userName: values.userName,
+        phone: values.phone,
+        password: values.password,
+        dob: dateData.dateResult,
+        address: adressData,
+      };
+      const data = await createAccount(accountData);
+      console.log("data rs: ",data);
+      swal(ALERT.success, "Đăng ký thành công !", "success");
+      navigate("/login");
+    } catch (e) {
+      console.log(e?.response.data.msg);
+      const msgError = e?.response.data.msg;
+      if(msgError === API_RES_MSG.failed.usrNameExited){
+        swal(ALERT.failed, "Tên đăng nhập đã tồn tại !", "error");
+      }else if(msgError === API_RES_MSG.failed.tooLongUsrName){
+        swal(ALERT.failed, "Tên đăng nhập giới hạn 10 ký tự !", "error");
+      }
+    }
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
-    swal(ALERT.failed,"Hãy điền đầy đủ thông tin !","error");
+    swal(ALERT.failed, "Hãy điền đầy đủ thông tin !", "error");
   };
   const goToLogin = () => {
     navigate("/login");
@@ -65,21 +90,24 @@ function Register() {
             autoComplete="off"
           >
             <Form.Item
+              validateTrigger="onBlur"
               label="Tên đăng nhập"
-              name="username"
+              name="userName"
               rules={[
                 {
+                  max: 10,
                   required: true,
                 },
               ]}
               messageVariables={{
-                VnName: "Tên đăng nhập"
+                VnName: "Tên đăng nhập",
               }}
             >
               <Input />
             </Form.Item>
 
             <Form.Item
+              validateTrigger="onBlur"
               label="Mật khẩu"
               name="password"
               rules={[
@@ -99,12 +127,13 @@ function Register() {
             </Form.Item>
 
             <Form.Item
+              validateTrigger="onBlur"
               label="Số điện thoại"
               name="phone"
               rules={[
                 {
                   required: true,
-                  pattern: regexObject.phone
+                  pattern: regexObject.phone,
                 },
               ]}
               messageVariables={{
@@ -114,8 +143,9 @@ function Register() {
             >
               <Input />
             </Form.Item>
-            
+
             <Form.Item
+              validateTrigger="onBlur"
               label="Số nhà"
               name="locateNumber"
               rules={[
@@ -124,54 +154,58 @@ function Register() {
                 },
               ]}
               messageVariables={{
-                VnName: "Số nhà"
+                VnName: "Số nhà",
               }}
             >
               <Input />
             </Form.Item>
             <Form.Item
+              validateTrigger="onBlur"
               label="Đường"
-              name="stress"
+              name="street"
               rules={[
                 {
                   required: true,
                 },
               ]}
               messageVariables={{
-                VnName: "Đường"
+                VnName: "Đường",
               }}
             >
               <Input />
             </Form.Item>
             <Form.Item
+              validateTrigger="onBlur"
               label="Phường/ Xã"
-              name="subDistric"
+              name="subDistrict"
               rules={[
                 {
                   required: true,
                 },
               ]}
               messageVariables={{
-                VnName: "Phường/ Xã"
+                VnName: "Phường/ Xã",
               }}
             >
               <Input />
             </Form.Item>
             <Form.Item
+              validateTrigger="onBlur"
               label="Quận/Huyện"
-              name="distric"
+              name="district"
               rules={[
                 {
                   required: true,
                 },
               ]}
               messageVariables={{
-                VnName: "Quận/Huyện"
+                VnName: "Quận/Huyện",
               }}
             >
               <Input />
             </Form.Item>
             <Form.Item
+              validateTrigger="onBlur"
               label="Thành phố"
               name="city"
               rules={[
@@ -180,17 +214,18 @@ function Register() {
                 },
               ]}
               messageVariables={{
-                VnName: "Thành phố"
+                VnName: "Thành phố",
               }}
             >
               <Input />
             </Form.Item>
             <Form.Item
+              validateTrigger="onBlur"
               label="Ngày sinh"
-              name="DatePicker"
-              rules={[{ required: true}]}
+              name="dob"
+              rules={[{ required: true }]}
               messageVariables={{
-                VnName: "Ngày sinh"
+                VnName: "Ngày sinh",
               }}
             >
               <DatePicker />

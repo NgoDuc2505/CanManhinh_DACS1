@@ -3,8 +3,8 @@ import { axiosWithoutAuth } from "../../services/services";
 const validateMessages = {
   required: "${VnName} không được để trống !",
   string: {
-    max: "Tối đa 12 ký tự !",
-    min: "Tối đa 8 ký tự !",
+    max: "Tối đa ${max} ký tự !",
+    min: "Tối đa ${min} ký tự !",
   },
   pattern: {
     mismatch: "${regexMsg}",

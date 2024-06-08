@@ -12,6 +12,12 @@ const ALERT = {
   failed: "Thất bại",
   success: "Thành công"
 }
+const API_RES_MSG={
+  failed:{
+    usrNameExited: "Exited username...!",
+    tooLongUsrName: "BE ERROR"
+  }
+}
 export {
   LOGIN,
   REGISTER,
@@ -23,5 +29,6 @@ export {
   ADMIN_CODE,
   TOKEN_HEADER,
   SECURE_PASS,
-  ALERT
+  ALERT,
+  API_RES_MSG
 };
