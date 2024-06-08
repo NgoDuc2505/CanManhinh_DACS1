@@ -19,7 +19,8 @@ import {
   HOME,
   ADMIN,
   TOKEN_LOGIN,
-  USER_PROFILE
+  USER_PROFILE,
+  ADMIN_CODE
 } from "../../constants/constant";
 import { getValue } from "../../services/local_storage";
 import { useDispatch } from "react-redux";
@@ -59,7 +60,7 @@ function Header() {
   useEffect(() => {
     if (data && profile) {
       dispatch(setCurrentUser(profile))
-      if(profile?.roleID == 1){
+      if(profile?.roleID == ADMIN_CODE){
         setSubMenu([
           {
             label: "Đăng xuất",
@@ -172,7 +173,7 @@ function Header() {
           className={hiddenState ? menu2_hidden : menu2_display}
         />
         <div className={style["user_logo"]}>
-          <NavLink to={"/profile/34"}>
+          <NavLink to={"/profile"}>
             <UserOutlined />
           </NavLink>
         </div>

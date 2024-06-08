@@ -1,3 +1,5 @@
+import { axiosWithoutAuth } from "../../services/services";
+
 const validateMessages = {
   required: "${VnName} không được để trống !",
   string: {
@@ -20,4 +22,17 @@ const regexObject = {
   phone: /^[0-9]{9,12}$/,
 };
 
-export { mapperRegex, regexObject, validateMessages };
+const updateProfile = async (data, userToken) => {
+  console.log(userToken);
+  const dataUpdate = await axiosWithoutAuth({
+    method: "PUT",
+    url: `/users/updateUser/${data.userName}`,
+    data: data,
+    headers: {
+      'token_header': userToken,
+    }
+  });
+  return dataUpdate;
+};
+
+export { mapperRegex, regexObject, validateMessages, updateProfile };

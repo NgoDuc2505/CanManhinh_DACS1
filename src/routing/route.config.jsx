@@ -75,7 +75,7 @@ const router = createBrowserRouter([
             element: <LazyRegister></LazyRegister>,
           },
           {
-            path: "/profile/:usrName",
+            path: "/profile",
             element: <LazyProfile></LazyProfile>,
           },
           {

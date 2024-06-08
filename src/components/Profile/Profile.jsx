@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import { ADMIN_CODE } from "../../constants/constant";
+
 function Profile() {
   const selector = useSelector((state) => state.profileSlice.user);
   console.log(selector);
@@ -24,7 +26,7 @@ function Profile() {
       swal("Thất bại!", `Vui lòng đăng nhập !`, "error");
       navigate("/login");
     } else {
-      if (selector?.roleID == 1) {
+      if (selector?.roleID == ADMIN_CODE) {
         setIsAdmin(true);
       } else {
         setIsAdmin(false);
