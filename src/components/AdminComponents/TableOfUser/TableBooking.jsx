@@ -85,7 +85,7 @@ const TableBooking = () => {
           address: item.address,
           role: item.roleID == 1 ? "Admin" : "User",
           action: (
-            <ButtonGroupBooking idUser={item.userName}></ButtonGroupBooking>
+            <ButtonGroupBooking data={item}></ButtonGroupBooking>
           ),
         };
       });

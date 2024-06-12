@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import PageNoteExits from "../components/PageNotExits/PageNoteExits.jsx";
 import TableBooking from "../components/AdminComponents/TableOfUser/TableBooking.jsx";
 import TableOfBookingPage from "../components/AdminComponents/TableOfBooking/TableOfBookingPage.jsx";
+import TableOfVoucher from "../components/AdminComponents/TableOfVoucher/TableOfVoucher.jsx";
 
 const LazyHome = lazy(() => import("../layouts/HomeTemplate"));
 const LazyAdmin = lazy(() => import("../layouts/Admin/AdminTemplate"));
@@ -123,7 +124,7 @@ const router = createBrowserRouter([
           },
           {
             path: "feature",
-            element: <h1>feat</h1>,
+            element: <TableOfVoucher></TableOfVoucher>,
           },
         ],
       },
