@@ -24,4 +24,20 @@ const dataSourceFormater = (dataAPISource) => {
   });
 };
 
-export { getBookingList, dataSourceFormater };
+const setIsDelBooking = async (bookingId,usrName) => {
+  try {
+    const dataDel = await axiosWithAuth({
+      method: "put",
+      url: `/booking/setIsDel/${bookingId}`,
+      data:{
+        usrName
+      }
+    })
+    return dataDel
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+export { getBookingList, dataSourceFormater, setIsDelBooking };
