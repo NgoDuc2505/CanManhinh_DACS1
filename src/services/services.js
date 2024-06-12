@@ -1,6 +1,7 @@
 //axios
 import axios from "axios";
-import { BASE_URL_API } from "../constants/constant";
+import { BASE_URL_API, TOKEN_HEADER, TOKEN_LOGIN } from "../constants/constant";
+import { getValue } from "./local_storage";
 
 const axiosWithAuth = axios.create({
   baseURL: BASE_URL_API,
@@ -9,7 +10,14 @@ const axiosWithAuth = axios.create({
 
 axiosWithAuth.interceptors.request.use(
   (config) => {
-    config.headers.token = "token_here";
+    const token = getValue(TOKEN_LOGIN);
+    console.log(token, config);
+    if (token) {
+      config.headers[TOKEN_HEADER] = `${token}`;
+    } else {
+      config.headers[TOKEN_HEADER] = null;
+    }
+    return config;
   },
   (error) => {
     return Promise.reject(error);

@@ -9,6 +9,7 @@
 
     .space_item_table{
         height: unset!important;
+        overflow-x: scroll;
     } 
 
     .space_form_profile{

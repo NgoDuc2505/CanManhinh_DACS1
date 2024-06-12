@@ -8,7 +8,17 @@ const USER_PROFILE = "profile_data";
 const ADMIN_CODE = 1;
 const TOKEN_HEADER = "token_header";
 const SECURE_PASS = "SecurePass1!"
-
+const ALERT = {
+  failed: "Thất bại",
+  success: "Thành công"
+}
+const API_RES_MSG={
+  failed:{
+    usrNameExited: "Exited username...!",
+    tooLongUsrName: "BE ERROR",
+    dateBookInvalid : "Date booking is invalid..."
+  }
+}
 export {
   LOGIN,
   REGISTER,
@@ -19,5 +29,7 @@ export {
   USER_PROFILE,
   ADMIN_CODE,
   TOKEN_HEADER,
-  SECURE_PASS
+  SECURE_PASS,
+  ALERT,
+  API_RES_MSG
 };

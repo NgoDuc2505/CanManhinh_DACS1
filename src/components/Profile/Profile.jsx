@@ -12,17 +12,19 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
-import { ADMIN_CODE } from "../../constants/constant";
+import { ADMIN_CODE, TOKEN_LOGIN } from "../../constants/constant";
+import { getValue } from "../../services/local_storage";
 
 function Profile() {
   const selector = useSelector((state) => state.profileSlice.user);
   console.log(selector);
+  const tokenLogin = getValue(TOKEN_LOGIN);
   const navigate = useNavigate();
   const { Title } = Typography;
   const [isAdmin, setIsAdmin] = useState(false);
   const roleList = ["Tài khoản quản trị", "Tài khoản người dùng"];
   useEffect(() => {
-    if (!selector) {
+    if (!tokenLogin) {
       swal("Thất bại!", `Vui lòng đăng nhập !`, "error");
       navigate("/login");
     } else {
@@ -32,7 +34,7 @@ function Profile() {
         setIsAdmin(false);
       }
     }
-  }, []);
+  }, [selector]);
   if (!selector) {
     return <div>error</div>;
   }
@@ -112,7 +114,7 @@ function Profile() {
             style={{
               backgroundColor: "#d9dfe5",
               width: "100%",
-              height: "50%",
+              // height: "480px",
               borderRadius: "8px",
               marginTop: "10px",
             }}

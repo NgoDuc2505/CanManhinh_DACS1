@@ -1,56 +1,70 @@
-import { useRef, useState } from 'react';
-import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table } from 'antd';
-import Highlighter from 'react-highlight-words';
+import { useEffect, useRef, useState } from "react";
+import { SearchOutlined } from "@ant-design/icons";
+import { Button, Input, Space, Table, Tag } from "antd";
+import Highlighter from "react-highlight-words";
+import { dataSourceFormater, getBookingList } from "./tableProfileHandler";
+import { useSelector } from "react-redux";
 
 const data = [
   {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
+    key: "1",
+    fullName: "John Brown",
+    timeBook: 32,
+    total: "New York No. 1 Lake Park",
   },
   {
-    key: '2',
-    name: 'Joe Black',
-    age: 42,
-    address: 'London No. 1 Lake Park',
+    key: "2",
+    fullName: "Joe Black",
+    timeBook: 42,
+    total: "London No. 1 Lake Park",
   },
   {
-    key: '3',
-    name: 'Jim Green',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
+    key: "3",
+    fullName: "Jim Green",
+    timeBook: 32,
+    total: "Sydney No. 1 Lake Park",
   },
   {
-    key: '4',
-    name: 'Jim Red',
-    age: 32,
-    address: 'London No. 2 Lake Park',
+    key: "4",
+    fullName: "Jim Red",
+    timeBook: 32,
+    total: "London No. 2 Lake Park",
   },
   {
-    key: '5',
-    name: 'Tom',
-    age: 32,
-    address: 'London No. 2 Lake Park',
+    key: "5",
+    fullName: "Tom",
+    timeBook: 32,
+    total: "London No. 2 Lake Park",
   },
 ];
 // const emptyData = [];
 const TableProfile = () => {
-  const [searchText, setSearchText] = useState('');
-  const [searchedColumn, setSearchedColumn] = useState('');
+  const selector = useSelector((state) => state.profileSlice.user);
+  console.log(selector);
+  const [searchText, setSearchText] = useState("");
+  const [bookingList, setBookingList] = useState(data);
+  const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
+  const handleClickOnDelBooking = (idBooking) => {
+    console.log(idBooking);
+  };
   const handleReset = (clearFilters) => {
     clearFilters();
-    setSearchText('');
+    setSearchText("");
   };
   const getColumnSearchProps = (dataIndex) => ({
-    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+    filterDropdown: ({
+      setSelectedKeys,
+      selectedKeys,
+      confirm,
+      clearFilters,
+      close,
+    }) => (
       <div
         style={{
           padding: 8,
@@ -61,11 +75,13 @@ const TableProfile = () => {
           ref={searchInput}
           placeholder={`Search ${dataIndex}`}
           value={selectedKeys[0]}
-          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onChange={(e) =>
+            setSelectedKeys(e.target.value ? [e.target.value] : [])
+          }
           onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
           style={{
             marginBottom: 8,
-            display: 'block',
+            display: "block",
           }}
         />
         <Space>
@@ -117,7 +133,7 @@ const TableProfile = () => {
     filterIcon: (filtered) => (
       <SearchOutlined
         style={{
-          color: filtered ? '#1677ff' : undefined,
+          color: filtered ? "#1677ff" : undefined,
         }}
       />
     ),
@@ -132,12 +148,12 @@ const TableProfile = () => {
       searchedColumn === dataIndex ? (
         <Highlighter
           highlightStyle={{
-            backgroundColor: '#ffc069',
+            backgroundColor: "#ffc069",
             padding: 0,
           }}
           searchWords={[searchText]}
           autoEscape
-          textToHighlight={text ? text.toString() : ''}
+          textToHighlight={text ? text.toString() : ""}
         />
       ) : (
         text
@@ -145,28 +161,82 @@ const TableProfile = () => {
   });
   const columns = [
     {
-      title: 'Tên',
-      dataIndex: 'name',
-      key: 'name',
-      width: '30%',
-      ...getColumnSearchProps('name'),
+      title: "Tên",
+      dataIndex: "fullName",
+      key: "fullName",
+      width: "20%",
+      ...getColumnSearchProps("fullName"),
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      width: '20%',
-      ...getColumnSearchProps('age'),
+      title: "Ngày đặt",
+      dataIndex: "timeBook",
+      key: "timeBook",
+      width: "20%",
+      ...getColumnSearchProps("timeBook"),
     },
     {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-      ...getColumnSearchProps('address'),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortDirections: ['descend', 'ascend'],
+      title: "Địa chỉ",
+      dataIndex: "adress",
+      key: "adress",
+      width: "40%",
+      ...getColumnSearchProps("adress"),
+    },
+    {
+      title: "Đơn giá",
+      dataIndex: "total",
+      key: "total",
+      width: "10%",
+      ...getColumnSearchProps("total"),
+      sorter: (a, b) => a.total.length - b.total.length,
+      sortDirections: ["descend", "ascend"],
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "isDone",
+      key: "isDone",
+      width: "5%",
+      render: (_, record) => (
+        <Tag color={record.isDone ? "green" : "geekblue"} key={record.key}>
+          {record.isDone ? "Hoàn thành" : "Đang chờ"}
+        </Tag>
+      ),
+    },
+    {
+      title: "Action",
+      key: "action",
+      width: "5%",
+      render: (_, record) => (
+        <Space
+          size="middle"
+          key={record.key}
+          onClick={() => {
+            handleClickOnDelBooking(record.key);
+          }}
+        >
+          <button className="btn btn-danger">Xóa</button>
+        </Space>
+      ),
     },
   ];
-  return <Table columns={columns} dataSource={data} style={{width: "100%"}} pagination={{pageSize:4}} />;
+  useEffect(() => {
+    const iife = async () => {
+      const dataBookingOfUser = await getBookingList(selector?.userName);
+      if (dataBookingOfUser) {
+        setBookingList(dataSourceFormater(dataBookingOfUser?.content));
+      } else {
+        setBookingList([]);
+      }
+    };
+    iife();
+  }, []);
+  console.log("bookingList", bookingList);
+  return (
+    <Table
+      columns={columns}
+      dataSource={bookingList}
+      style={{ width: "100%" }}
+      pagination={{ pageSize: 4 }}
+    />
+  );
 };
 export default TableProfile;

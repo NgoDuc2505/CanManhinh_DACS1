@@ -1,5 +1,5 @@
 .formBooking {
-  height: 100vh;
+  /* height: 100vh; */
   margin-top: 70px;
   padding-top: 50px;
   padding-bottom: 20px;
@@ -39,9 +39,9 @@
 }
 
 @media screen and (min-width: 575.98px) {
-  .formBooking {
+  /* .formBooking {
     height: 540px;
-  }
+  } */
   .form_content {
     width: 95%;
   }
@@ -51,15 +51,15 @@
 }
 
 @media screen and (min-width: 767.98px) {
-  .formBooking {
+  /* .formBooking {
     height: 600px;
-  }
+  } */
 }
 
 @media screen and (min-width: 1199.98px) {
-  .formBooking {
+  /* .formBooking {
     height: 100vh;
-  }
+  } */
   .form_content {
     width: 60%;
   }

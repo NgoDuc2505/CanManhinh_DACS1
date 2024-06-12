@@ -18,7 +18,11 @@ import {
 import { useSelector } from "react-redux";
 import { decodePass } from "../../services/check_pass.js";
 import { getValue, setLocal } from "../../services/local_storage.js";
-import { TOKEN_LOGIN, USER_PROFILE, SECURE_PASS } from "../../constants/constant.js";
+import {
+  TOKEN_LOGIN,
+  USER_PROFILE,
+  SECURE_PASS,
+} from "../../constants/constant.js";
 import swal from "sweetalert";
 import { useNavigate } from "react-router-dom";
 
@@ -33,14 +37,29 @@ function FormProfile() {
   }
   const dateFormat = "YYYY/MM/DD";
   const dobInit = new Date(selector?.dob);
-  const dateFormater = {
-    year: dobInit.getFullYear(),
-    month:
-      dobInit.getMonth() + 1 < 10
-        ? `0${dobInit.getMonth() + 1}`
-        : dobInit.getMonth() + 1,
-    date: dobInit.getDate(),
-  };
+  let dateFormater = {};
+  if(dobInit){
+    const data = selector?.dob.split("T");
+    const fullDate = data[0];
+    const dateArray = fullDate.split("-");
+    const dateFormaterFromArray = {
+      year: dateArray[0],
+      month: dateArray[1],
+      date: dateArray[2]
+    }
+    dateFormater = {
+      ...dateFormaterFromArray
+    }
+  }else{
+    dateFormater = {
+     year: dobInit.getFullYear(),
+     month:
+       dobInit.getMonth() + 1 < 10
+         ? `0${dobInit.getMonth() + 1}`
+         : dobInit.getMonth() + 1,
+     date: dobInit.getDate(),
+   };
+  }
   const initProfileData = {
     address: selector?.address,
     dayCreated: "",
@@ -53,6 +72,7 @@ function FormProfile() {
     roleID: selector?.roleID,
     userName: selector?.userName,
   };
+  // console.log("defaut render form profile: ", initProfileData);
 
   const [form] = Form.useForm();
   const [disabled, setDisabled] = useState(true);
@@ -80,7 +100,7 @@ function FormProfile() {
       console.log(valueUpdate.password);
       if (valueUpdate.password === SECURE_PASS) {
         valueUpdate.password = passInputCurrent;
-      }else{
+      } else {
         needToLogOut = true;
       }
       const token = getValue(TOKEN_LOGIN);
@@ -98,13 +118,17 @@ function FormProfile() {
       };
       const rs = await updateProfile(data, token);
       setIsModalOpen(false);
-      setLocal(rs?.data.content.data,USER_PROFILE);
-      setLocal(rs?.data.content.token,TOKEN_LOGIN);
-      
-      if(needToLogOut){
-        swal("Thành công!", `Bạn đã cập nhật, hãy đăng nhập để bắt đầu !`, "success");
+      setLocal(rs?.data.content.data, USER_PROFILE);
+      setLocal(rs?.data.content.token, TOKEN_LOGIN);
+
+      if (needToLogOut) {
+        swal(
+          "Thành công!",
+          `Bạn đã cập nhật, hãy đăng nhập để bắt đầu !`,
+          "success"
+        );
         navigate("/logOut");
-      }else{
+      } else {
         swal("Thành công!", `Bạn đã cập nhật !`, "success");
         navigate("/");
       }
