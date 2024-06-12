@@ -1,69 +1,39 @@
 import { useEffect, useRef, useState } from "react";
 import { SearchOutlined } from "@ant-design/icons";
-import { Button, Input, Space, Table, Tag } from "antd";
+import { Button, Input, Space, Table } from "antd";
 import Highlighter from "react-highlight-words";
-import {
-  dataSourceFormater,
-  getBookingList,
-  setIsDelBooking,
-} from "./tableProfileHandler";
+import { axiosWithAuth } from "../../../services/services";
 import { useSelector } from "react-redux";
+import { data, setIsDoneToggle } from "./TableBookingPageHandler";
 
-const data = [
-  {
-    key: "1",
-    fullName: "John Brown",
-    timeBook: 32,
-    total: "New York No. 1 Lake Park",
-  },
-  {
-    key: "2",
-    fullName: "Joe Black",
-    timeBook: 42,
-    total: "London No. 1 Lake Park",
-  },
-  {
-    key: "3",
-    fullName: "Jim Green",
-    timeBook: 32,
-    total: "Sydney No. 1 Lake Park",
-  },
-  {
-    key: "4",
-    fullName: "Jim Red",
-    timeBook: 32,
-    total: "London No. 2 Lake Park",
-  },
-  {
-    key: "5",
-    fullName: "Tom",
-    timeBook: 32,
-    total: "London No. 2 Lake Park",
-  },
-];
-// const emptyData = [];
-const TableProfile = () => {
-  const selector = useSelector((state) => state.profileSlice.user);
-  console.log(selector);
+const TableOfBookingPage = () => {
+  const profile = useSelector((state) => state.profileSlice.user);
   const [searchText, setSearchText] = useState("");
-  const [bookingList, setBookingList] = useState(data);
-  const [isReset, setIsReset] = useState(false);
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const [dataListSource, setDataList] = useState(data);
+  const [isReload, setIsReload] = useState(false);
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
     setSearchedColumn(dataIndex);
   };
-  const handleClickOnDelBooking = async (idBooking) => {
-    console.log(idBooking);
-    const dataDelBooking = await setIsDelBooking(idBooking, selector.userName);
-    console.log("dataDelBooking: ", dataDelBooking);
-    setIsReset(!isReset);
-  };
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
+  };
+  const handleClickSetDone = async (bookingId, currentStatus) => {
+    console.log("bookingId: ", bookingId);
+    console.log("usrName: ", profile.userName);
+    const status = !currentStatus ? "true" : "false";
+    console.log("currentStatus: ", status);
+    const dataToggle = await setIsDoneToggle(
+      profile.userName,
+      bookingId,
+      status
+    );
+    console.log(dataToggle);
+    setIsReload(!isReload);
   };
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -169,82 +139,104 @@ const TableProfile = () => {
   });
   const columns = [
     {
-      title: "Tên",
+      title: "ID",
+      dataIndex: "bookingID",
+      key: "bookingID",
+      width: "5%",
+      ...getColumnSearchProps("bookingID"),
+    },
+    {
+      title: "Họ tên",
       dataIndex: "fullName",
       key: "fullName",
-      width: "20%",
+      width: "10%",
       ...getColumnSearchProps("fullName"),
     },
     {
-      title: "Ngày đặt",
+      title: "Tài khoản",
+      dataIndex: "userName",
+      key: "userName",
+      width: "10%",
+      ...getColumnSearchProps("userName"),
+    },
+    {
+      title: "Thời gian",
       dataIndex: "timeBook",
       key: "timeBook",
-      width: "20%",
+      width: "15%",
       ...getColumnSearchProps("timeBook"),
     },
     {
       title: "Địa chỉ",
       dataIndex: "adress",
       key: "adress",
-      width: "40%",
+      width: "30%",
       ...getColumnSearchProps("adress"),
     },
     {
-      title: "Đơn giá",
-      dataIndex: "total",
-      key: "total",
-      width: "10%",
-      ...getColumnSearchProps("total"),
-      sorter: (a, b) => a.total.length - b.total.length,
-      sortDirections: ["descend", "ascend"],
+      title: "Ghi chú",
+      dataIndex: "note",
+      key: "note",
+      width: "20%",
+      ...getColumnSearchProps("note"),
     },
     {
-      title: "Trạng thái",
-      dataIndex: "isDone",
-      key: "isDone",
-      width: "5%",
-      render: (_, record) => (
-        <Tag color={record.isDone ? "green" : "geekblue"} key={record.key}>
-          {record.isDone ? "Hoàn thành" : "Đang chờ"}
-        </Tag>
-      ),
+      title: "Số điện thoại",
+      dataIndex: "phone",
+      key: "phone",
+      width: "10%",
+      ...getColumnSearchProps("phone"),
+    },
+    {
+      title: "Tổng",
+      dataIndex: "Total",
+      key: "Total",
+      width: "10%",
+      ...getColumnSearchProps("Total"),
     },
     {
       title: "Action",
+      dataIndex: "action",
       key: "action",
-      width: "5%",
-      render: (_, record) => (
-        <Space
-          size="middle"
-          key={record.key}
-          onClick={() => {
-            handleClickOnDelBooking(record.key);
-          }}
-        >
-          <button className="btn btn-danger">Xóa</button>
-        </Space>
-      ),
+      width: "10%",
+      render: (_, render) => {
+        return (
+          <button
+            key={render.bookingID}
+            className={`btn ${render.isDone ? "btn-success" : "btn-danger"}`}
+            onClick={() => {
+              handleClickSetDone(render.bookingID, render.isDone);
+            }}
+          >
+            {render.isDone ? "Đã xong" : "Hoàn thành"}
+          </button>
+        );
+      },
     },
   ];
   useEffect(() => {
     const iife = async () => {
-      const dataBookingOfUser = await getBookingList(selector?.userName);
-      if (dataBookingOfUser) {
-        setBookingList(dataSourceFormater(dataBookingOfUser?.content));
-      } else {
-        setBookingList([]);
+      if (profile?.userName) {
+        const data = await axiosWithAuth({
+          method: "get",
+          url: `/booking/allList/${profile?.userName}`,
+        });
+        // console.log(data.data.content);
+        if (data) {
+          const mapData = data.data.content.map((item)=>{
+            return {
+              ...item,
+              Total: item.Total.toLocaleString()
+            }
+          })
+          setDataList(mapData);
+        } else {
+          setDataList(data);
+        }
       }
     };
     iife();
-  }, [selector,isReset]);
-  console.log("bookingList", bookingList);
-  return (
-    <Table
-      columns={columns}
-      dataSource={bookingList}
-      style={{ width: "100%" }}
-      pagination={{ pageSize: 4 }}
-    />
-  );
+  }, [profile, isReload]);
+  return <Table columns={columns} dataSource={dataListSource} />;
 };
-export default TableProfile;
+export default TableOfBookingPage;

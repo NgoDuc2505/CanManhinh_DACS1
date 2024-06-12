@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense, useEffect } from "react";
 import {
   LaptopOutlined,
   LogoutOutlined,
@@ -6,12 +6,21 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme } from "antd";
-import TableBooking from "../../components/AdminComponents/TableOfBooking/TableBooking";
 import style from "./adminTemplate.module.css";
-import { useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
+import { getValue } from "../../services/local_storage";
+import {
+  ADMIN_CODE,
+  TOKEN_LOGIN,
+  USER_PROFILE,
+} from "../../constants/constant";
+import { setCurrentUser, setIsAdmin } from "../../redux/Slices/profileSlice";
+import { useDispatch } from "react-redux";
+import { decodeToken } from "../../services/check_pass";
 const AdminTemplate = () => {
   const { admin_sider } = style;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -22,6 +31,8 @@ const AdminTemplate = () => {
     "Income",
     "Feature",
   ];
+
+  const sideBarNavPathMapping = ["", "bookingManage", "income", "feature"];
   const menuItem = ["PRO DISPLAY", "Home", "Dash Board", "Log Out"].map(
     (item, index) => {
       return {
@@ -38,7 +49,7 @@ const AdminTemplate = () => {
     LaptopOutlined,
   ].map((icon, index) => {
     return {
-      key: `${sideBarTitleMapping[index]}`,
+      key: `${sideBarNavPathMapping[index]}`,
       icon: React.createElement(icon),
       label: sideBarTitleMapping[index],
     };
@@ -58,7 +69,19 @@ const AdminTemplate = () => {
   const sibarHandleClick = (e) => {
     const { key } = e;
     console.log(key);
+    navigate(`${key}`);
   };
+  const data = getValue(TOKEN_LOGIN);
+  const profile = getValue(USER_PROFILE);
+  const tokenDecode = decodeToken(data);
+  useEffect(() => {
+    dispatch(setCurrentUser(profile));
+    if (tokenDecode?.roleID == ADMIN_CODE) {
+      dispatch(setIsAdmin(true));
+    } else {
+      dispatch(setIsAdmin(false));
+    }
+  }, []);
   return (
     <Layout>
       <Header
@@ -123,7 +146,9 @@ const AdminTemplate = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            <TableBooking data={[]}></TableBooking>
+            <Suspense>
+              <Outlet></Outlet>
+            </Suspense>
           </Content>
         </Layout>
       </Layout>

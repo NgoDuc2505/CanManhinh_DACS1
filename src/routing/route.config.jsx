@@ -3,6 +3,8 @@ import { Suspense, lazy, useEffect } from "react";
 import { Spin } from "antd";
 import { QueryClient, QueryClientProvider } from "react-query";
 import PageNoteExits from "../components/PageNotExits/PageNoteExits.jsx";
+import TableBooking from "../components/AdminComponents/TableOfUser/TableBooking.jsx";
+import TableOfBookingPage from "../components/AdminComponents/TableOfBooking/TableOfBookingPage.jsx";
 
 const LazyHome = lazy(() => import("../layouts/HomeTemplate"));
 const LazyAdmin = lazy(() => import("../layouts/Admin/AdminTemplate"));
@@ -21,11 +23,11 @@ const LazyProfile = lazy(() => import("../components/Profile/Profile.jsx"));
 const LazyDescription = lazy(() =>
   import("../components/DefineServices/DefineContent.jsx")
 );
-const LazyBookingNow = lazy(()=>import("../components/BookingNow/BookingNow.jsx"));
-const LazyLogout = lazy(()=>import("../components/Logout/Logout.jsx"))
-const queryClient = new QueryClient({
-  
-});
+const LazyBookingNow = lazy(() =>
+  import("../components/BookingNow/BookingNow.jsx")
+);
+const LazyLogout = lazy(() => import("../components/Logout/Logout.jsx"));
+const queryClient = new QueryClient({});
 const RootRouterComponent = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -80,16 +82,24 @@ const router = createBrowserRouter([
           },
           {
             path: "/services",
-            element: <div style={{marginTop:"100px"}}><LazyDescription></LazyDescription></div>,
+            element: (
+              <div style={{ marginTop: "100px" }}>
+                <LazyDescription></LazyDescription>
+              </div>
+            ),
           },
           {
             path: "support",
-            element: <div style={{marginTop:"100px"}}><LazyBookingNow></LazyBookingNow></div>,
+            element: (
+              <div style={{ marginTop: "100px" }}>
+                <LazyBookingNow></LazyBookingNow>
+              </div>
+            ),
           },
           {
             path: "logOut",
-            element: <LazyLogout></LazyLogout>
-          }
+            element: <LazyLogout></LazyLogout>,
+          },
         ],
       },
       {
@@ -98,6 +108,24 @@ const router = createBrowserRouter([
           <Spin spinning={true} fullscreen style={{ opacity: ".7" }} />
         ),
         element: <LazyAdmin></LazyAdmin>,
+        children: [
+          {
+            path: "",
+            element: <TableBooking></TableBooking>,
+          },
+          {
+            path: "bookingManage",
+            element: <TableOfBookingPage></TableOfBookingPage>,
+          },
+          {
+            path: "income",
+            element: <h1>income</h1>,
+          },
+          {
+            path: "feature",
+            element: <h1>feat</h1>,
+          },
+        ],
       },
     ],
   },
