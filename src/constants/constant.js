@@ -15,7 +15,8 @@ const ALERT = {
 const API_RES_MSG={
   failed:{
     usrNameExited: "Exited username...!",
-    tooLongUsrName: "BE ERROR"
+    tooLongUsrName: "BE ERROR",
+    dateBookInvalid : "Date booking is invalid..."
   }
 }
 export {

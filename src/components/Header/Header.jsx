@@ -20,11 +20,12 @@ import {
   ADMIN,
   TOKEN_LOGIN,
   USER_PROFILE,
-  ADMIN_CODE
+  ADMIN_CODE,
 } from "../../constants/constant";
 import { getValue } from "../../services/local_storage";
 import { useDispatch } from "react-redux";
-import { setCurrentUser } from "../../redux/Slices/profileSlice";
+import { setCurrentUser, setIsAdmin } from "../../redux/Slices/profileSlice";
+import { decodeToken } from "../../services/check_pass";
 
 
 function Header() {
@@ -47,11 +48,6 @@ function Header() {
       key: LOGIN,
       icon: <LoginOutlined />,
     },
-    {
-      label: "Admin",
-      key: ADMIN,
-      icon: <UserOutlined />,
-    },
   ];
   const [subMenuState, setSubMenu] = useState(subMenu);
   const data = getValue(TOKEN_LOGIN);
@@ -59,8 +55,11 @@ function Header() {
 
   useEffect(() => {
     if (data && profile) {
-      dispatch(setCurrentUser(profile))
-      if(profile?.roleID == ADMIN_CODE){
+      dispatch(setCurrentUser(profile));
+      const tokenDecode = decodeToken(data);
+      // console.log(tokenDecode);
+      if (tokenDecode?.roleID == ADMIN_CODE) {
+        dispatch(setIsAdmin(true));
         setSubMenu([
           {
             label: "Đăng xuất",
@@ -73,7 +72,7 @@ function Header() {
             icon: <UserOutlined />,
           },
         ]);
-      }else{
+      } else {
         setSubMenu([
           {
             label: "Đăng xuất",

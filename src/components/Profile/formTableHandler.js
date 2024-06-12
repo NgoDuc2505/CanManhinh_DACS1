@@ -15,11 +15,13 @@ const mapperRegex = {
     "Mật khẩu: tối thiểu 8 kí tự, tối đa 15 ký tự, chưa ít nhất 1 ký tự thường, 1 in hoa, 1 số, 1 ký tự đặc biệt.",
   birthday: "Vui lòng chọn ngày sinh.",
   phone: "Phải là số điện thoại.",
+  fullName: "Vui lòng nhập tên hợp lệ."
 };
 const regexObject = {
   regexPass:
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@.#$!%*?&^])[A-Za-z\d@.#$!%*?&]{8,15}$/,
   phone: /^[0-9]{9,12}$/,
+  vietnameseNameRegex: /^[A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯẠ-ỹ][a-zàáâãèéêìíòóôõùúăđĩũơưạ-ỹ]*( [A-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠƯẠ-ỹ][a-zàáâãèéêìíòóôõùúăđĩũơưạ-ỹ]*)*$/
 };
 
 const updateProfile = async (data, userToken) => {
